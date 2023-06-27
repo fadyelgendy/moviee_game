@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Movies Game V0.1 - By: Fady ElGendy</title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+			background: #7d35fc;
+			font-family: Arial, Helvetica, sans-serif;
+			text-align: center;
+			text-shadow: 1px 2px 1px #000;
+		}
+
+		h1 {
+			color: #FFF;
+			margin-bottom: 0.2rem;
+		}
+
+		small {
+			display: block;
+			color: #D5D5D5;
+		}
+
+		#container {
+			display: flex;
+			flex-direction: column;
+			width: 80dvw;
+			margin: auto;
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+			background: #FFF;
+			min-height: 200px;
+			box-shadow: 1px 2px 1px #000;
+			align-items: center;
+			justify-content: center;
+		}
+
+		#controls {
+			width: 80dvw;
+			margin: auto;
+			padding: 0.5rem;
+		}
+
+		button {
+			display: block;
+			border: none;
+			background: transparent;
+			text-transform: capitalize;
+			padding: 0.3rem 1rem;
+			box-shadow: 1px 2px 1px #000;
+			color: #FFF;
+			width: 100%;
+			margin: 0.5rem 0;
+			height: 70px;
+			font-size: 24px;
+			text-shadow: 1px 2px 1px #000;
+		}
+
+		button#new {
+			background: #074e67;
+		}
+
+		button#start {
+			background: #57a71c;
+		}
+
+		button#reset {
+			background: #da221e;
+		}
+
+		#timer {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 2rem;
+			font-weight: 800;
+		}
+
+		#timer>* {
+			text-shadow: none;
+		}
+
+		#movie {
+			font-size: 3rem;
+			font-weight: 600;
+			padding: 0.5rem;
+		}
+	</style>
+</head>
+
+<body>
+
+	<section>
+		<h1>Movies Game v0.1</h1>
+		<small>By: Fady ElGendy</small>
+
+		<div id="container">
+			<div id="movie"></div>
+			<div id="timer">
+				<div id="min">00</div>
+				<div>:</div>
+				<div id="sec">00</div>
+			</div>
+		</div>
+		<div id="controls">
+			<button id="new">new</button>
+			<button id="start">start</button>
+			<button id="reset">Reset</button>
+		</div>
+	</section>
+
+	<script>
+		const movies = [
+			'العزيمة',
+			'الأرض',
+			'المومياء',
+			'باب الحديد',
+			'الحرام',
+			'شباب امرأة',
+			'بداية ونهاية',
+			'سواق الأتوبيس',
+			'غزل البنات',
+			'الفتوة',
+			'الناصر صلاح الدين',
+			'البوسطجي',
+			'رد قلبي',
+			'دعاء الكروان',
+			'اللص والكلاب',
+			'الزوجة الثانية',
+			'أم العروسة',
+			'القاهرة 30',
+			'شيء من الخوف',
+			'الطوق والإسورة',
+			'أريد حلا',
+			'لاشين',
+			'في بيتنا رجل',
+			'الكيت كات',
+			'صراع في الوادي',
+			'جعلوني مجرما',
+			'ريا وسكينة',
+			'البريء',
+			'ميرامار',
+			'زوجة رجل مهم',
+			'السقا مات', ,
+			'إسكندرية ليه',
+			'زوجتي والكلب',
+			'السوق السوداء',
+			'مراتي مدير عام',
+			'أحلام هند وكاميليا',
+			'أهل القمة',
+			'حياة أو موت',
+			'الكرنك',
+			'زائر الفجر',
+			'النائب العام',
+			'درب المهابيل',
+			'ليل وقضبان',
+			'إحنا التلامذة',
+			'العصفور',
+			'على من نطلق الرصاص',
+			'لك يوم يا ظالم',
+			'ثرثرة فوق النيل',
+			'صراع الأبطال',
+			'أين عمري',
+			'عودة الابن الضال',
+			'المهاجر',
+			'الاختيار',
+			'جميلة',
+			'ليه يا بنفسج',
+			'العار',
+			'خرج ولم يعد',
+			'بين السما والأرض',
+			'غروب وشروق',
+			'للحب قصة أخيرة',
+			'أمير الانتقام',
+			'المستحيل',
+			'قنديل أم هاشم',
+			'المذنبون',
+			'رصاصة في القلب',
+			'أغنية على الممر',
+			'المراهقات',
+			'الحب فوق هضبة الهرم',
+			'يوميات نائب في الأرياف',
+			'الوحش',
+			'سوبر ماركت',
+			'امرأة في الطريق',
+			'بين الأطلال',
+			'أبناء الصمت',
+			'الصعود إلى الهاوية',
+			'سلامة في خير',
+			'الأيدي الناعمة',
+			'المتمردون',
+			'خلي بالك من زوزو',
+			'الأفوكاتو',
+			'سي عمر',
+			'ابن النيل',
+			'أيامنا الحلوة',
+			'حدوتة مصرية',
+			'زينب',
+			'صراع في النيل',
+			'وا إسلاماه',
+			'أبي فوق الشجرة',
+			'إمبراطورية ميم',
+			'اللعب مع الكبار',
+			'غرام وانتقام',
+			'المنزل رقم 13',
+			'الخطايا',
+			'الجبل',
+			'السمان والخريف',
+			'بين القصرين',
+			'أنا حرة',
+			'الرجل الذي فقد ظله',
+			'دنانير',
+			'الزوجة 13',
+		];
+
+		// DOM elements
+		const min = document.getElementById('min');
+		const sec = document.getElementById('sec');
+		const newBtn = document.getElementById('new');
+		const startBtn = document.getElementById('start');
+		const resetBtn = document.getElementById('reset');
+		const movieContainer = document.getElementById('movie');
+
+		let played = [];
+		let timerEnd = false;
+		let minutes = 0;
+		let seconds = 0;
+
+		newBtn.addEventListener('click', run);
+		startBtn.addEventListener('click', startTimer);
+		resetBtn.addEventListener('click', function () {
+			window.location.reload();
+		});
+
+		async function run() {
+			let movie = movies[getIndex()];
+
+			if (played.includes(movie)) {
+				movie = movies[getIndex()];
+			}
+
+			played.push(movie);
+			movieContainer.innerHTML = movie;
+
+			updateTimer(movie);
+		}
+
+		async function startTimer() {
+			movieContainer.innerHTML = "HIDDEN";
+
+			let secs = parseInt(sec.innerText);
+			let mins = parseInt(min.textContent);
+
+			for (let i = secs; i >= 0; --i) {
+				sec.innerHTML = (i > 9) ? i : "0" + i;
+
+				if (i == 0 && mins != 0) {
+					mins = 0;
+					i = 59;
+					min.innerHTML = "00";
+				}
+
+				if (i == 0 && mins == 0) {
+					movieContainer.innerHTML = "TIMEOUT!";
+					timerEnd = true;
+					playSound();
+					return;
+				}
+
+				await sleep();
+			}
+		}
+
+		function sleep() {
+			return new Promise(resolve => setTimeout(resolve, 1000));
+		}
+
+		function updateTimer(movie) {
+			let time = getMovieTime(movie);
+
+			minutes = (time == 90) ? 1 : ((time == 120) ? 2 : 1);
+			seconds = (time == 90) ? 30 : 0;
+
+			if (minutes == 1 && seconds == 0) {
+				sec.innerHTML = 59;
+				min.innerHTML = "00";
+				return;
+			}
+
+			if (minutes == 2 && seconds == 0) {
+				sec.innerHTML = 59;
+				min.innerHTML = "01";
+				return;
+			}
+
+			if (minutes == 1 && seconds == 30) {
+				min.innerHTML = "01";
+				sec.innerHTML = 30;
+				return;
+			}
+		}
+
+		function playSound() {
+			let sound = new Audio("./beep-05.wav");
+			sound.loop = false;
+			sound.play();
+		}
+
+		function getIndex() {
+			return Math.floor(Math.random() * movies.length + 1) + 1;
+		}
+
+		function getMovieTime(movie) {
+			if (movie !== undefined) {
+				let len = movie.split(" ").length;
+				return (len > 2 && len < 4) ? 90 : ((len >= 4) ? 120 : 60);
+			}
+		}
+	</script>
+</body>
+
+</html>
